@@ -3,92 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hacker Simulator</title>
+  <title>Dark Trees Simulator</title>
   <style>
+    /* Horrible dark trees style */
     body {
       margin: 0;
       padding: 0;
       background-color: #000;
-      color: #0f0;
+      color: #0a0;
       font-family: 'Courier New', Courier, monospace;
-      font-size: 1.2rem;
+      font-size: 1rem;
       overflow: hidden;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
     }
 
     #terminal {
-      width: 90%;
-      max-width: 800px;
-      border: 2px solid #0f0;
+      width: 95%;
+      max-width: 900px;
       padding: 20px;
-      background-color: #101010;
-      box-shadow: 0 0 50px #0f0, 0 0 20px #f00 inset;
+      background: radial-gradient(circle at center, #001100, #000000 90%);
+      border: 2px solid #0a0;
+      box-shadow: 0 0 10px #0f0, inset 0 0 5px #005500;
+      height: 85vh;
       overflow-y: auto;
-      height: 80vh;
       position: relative;
     }
 
-    #terminal:before {
+    /* Tree-like branches */
+    #terminal::before {
       content: "";
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      background: repeating-linear-gradient(transparent, rgba(0, 255, 0, 0.1) 2px);
+      width: 100%;
+      height: 100%;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/7/73/Simple_binary_tree_with_root.svg');
+      background-size: cover;
+      background-blend-mode: multiply;
+      opacity: 0.2;
       pointer-events: none;
-      animation: flicker 1s infinite;
     }
 
-    @keyframes flicker {
+    /* Flickering text effect */
+    .flicker {
+      animation: flickerText 1.5s infinite alternate;
+    }
+
+    @keyframes flickerText {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.85; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Error text */
+    .error {
+      color: #f00;
+      font-weight: bold;
+      text-shadow: 0 0 10px #f00, 0 0 20px #a00;
     }
 
     .input-line {
+      margin-top: 20px;
       display: flex;
       align-items: center;
     }
 
+    /* Horrible tree colors for the links */
     .link {
-      color: #0ff;
+      color: #00aa00;
       text-decoration: none;
+      font-weight: bold;
     }
 
     .link:hover {
+      color: #005500;
       text-decoration: underline;
-    }
-
-    .error {
-      color: red;
-      font-weight: bold;
-      animation: typingEffect 1.5s infinite;
-    }
-
-    .fast-text {
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-
-    @keyframes typingEffect {
-      0%, 50% { color: #0f0; }
-      60% { color: #f00; }
-      100% { color: #0f0; }
-    }
-
-    @keyframes encryptionEffect {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    .encrypted {
-      color: #0f0;
-      font-weight: bold;
-      animation: encryptionEffect 1.2s infinite alternate;
     }
   </style>
 </head>
@@ -97,90 +88,82 @@
     <div id="output"></div>
     <div class="input-line">
       <span>&gt;</span>
-      <input type="text" id="input" autocomplete="off" autofocus style="background: none; border: none; color: #0f0; outline: none; width: 90%; font-weight: bold;">
+      <input type="text" id="input" autocomplete="off" autofocus style="background: none; border: none; color: #0a0; outline: none; width: 90%; font-weight: bold;">
     </div>
   </div>
 
   <script>
     const output = document.getElementById("output");
     const input = document.getElementById("input");
-    const correctCode = "zowatchdiediacpeopl";
-    const hackingLines = [
-      "==>[!] Encrypting matrix data stream...",
-      "**## Decoding XOR loop protocols...",
-      "[*] Randomizing hash algorithms...",
-      "~~~ Cryptographic chaos initialized...",
-      ">!@ Scrambling data pipelines...",
-      "#%$# Activating neural disruption modules...",
-      "-_- Injecting anomalies into mainframe...",
-      "><>< Corrupting system metadata...",
-      ":: Establishing obfuscated control..."
-    ];
-    const encryptedSymbols = [
-      "☠", "☢", "⚠", "☣", "§", "¶", "¤", "Δ", "Ω", "∞", "≡", "≠", "≈", "∑", "∫", "π", "≜", "∂", "↯", "↻", "⚡"
-    ];
-    const successMessage = "Access GRANTED. See the link below:";
-    const errorMessage = "⚠ ERROR: Unauthorized cryptographic entry detected.";
-    const linkHTML = `<a href="https://rayen514.github.io/WPD.com/" class="link" target="_blank">https://rayen514.github.io/WPD.com/</a>`;
+    const zowatchCode = "zowatchdiediacpeopl";
+    const installAppCode = "installapp//wpd";
+    const zowatchLink = "https://rayen514.github.io/WPD.com/";
+    const installAppLink = "https://l.facebook.com/l.php?u=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F1moYzPzCpUD0x7dimUbxpgiJp98_JeWJJ%2Fview%3Fusp%3Ddrivesdk%26fbclid%3DIwZXh0bgNhZW0CMTAAAR26IaHPai0wTUqjKVjwa1z-BofO-eHAypeF0vhWaKZ74ZIXmymIlvKCzKU_aem_AQepf1maLxcf-j-xF9H9yw&h=AT1gzu3w8I53oJgZUbTtSpiNeo2ZsDhNLI-ZxT2u7KF6T-0un0k7rsURAK1wghhTjanBAplR5cWVNyOmHeSnc5NLYYyVmTVV1oHVzxk4--kWbp19pTbezEM0z7dzi7tWKcfHzA";
 
-    function delay(ms) {
+    async function delay(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    function generateRandomSymbols(count = 30) {
-      let randomText = "";
-      for (let i = 0; i < count; i++) {
-        randomText += encryptedSymbols[Math.floor(Math.random() * encryptedSymbols.length)];
-      }
-      return randomText;
+    // Fonction pour générer des symboles mathématiques, grecs et autres caractères
+    function generateCrypticSymbols(text) {
+      const symbols = [
+        'Σ', '∇', '∑', '≡', '≈', 'α', 'β', 'γ', 'λ', 'δ', 'φ', 'θ', 'Ω', 'ξ', 'ψ', 'ϕ', 'η', 'π', 'ρ', 'σ',
+        '⇔', '⊗', '⊕', '≠', '√', '∫', '∞', '∃', '∀', '⊥', '⌀', '≪', '∝', '⇒', '⊆', '⊇', '⊂', '⊃', '⧫', '≔', '☢',
+        '↔', 'Δ', 'Θ', '©', '⊗', '₣', 'Ж', 'β', '✘', '∅', 'Ϟ', '≡', '⊕', '⋏', '⇕', 'ζ', 'ღ', 'ℑ', '¿', '₪', '♠', '⚡'
+      ];
+      return text.split('').map(char => {
+        if (Math.random() < 0.4) {
+          return symbols[Math.floor(Math.random() * symbols.length)];
+        }
+        return char;
+      }).join('');
     }
 
-    async function typeLine(line, speed = 20) {
+    async function displayMessage(message, type = "normal") {
       let p = document.createElement("p");
+      if (type === "error") {
+        p.classList.add("error");
+      } else if (type === "flicker") {
+        p.classList.add("flicker");
+      }
+      // Applique un cryptage avec des symboles aléatoires au message
+      p.textContent = generateCrypticSymbols(message);
       output.appendChild(p);
-      for (let i = 0; i < line.length; i++) {
-        p.textContent += line[i];
-        await delay(speed);
-      }
+      output.scrollTop = output.scrollHeight;
+      await delay(1000);
     }
 
-    async function simulateHacking() {
-      for (let line of hackingLines) {
-        const randomSymbols = generateRandomSymbols(10);
-        await typeLine(`${randomSymbols} ${line} ${randomSymbols}`, 30);
-      }
-      await delay(500);
-
-      const success = document.createElement("p");
-      success.textContent = successMessage;
-      output.appendChild(success);
-
-      const linkElement = document.createElement("p");
-      linkElement.innerHTML = linkHTML;
-      output.appendChild(linkElement);
+    async function displayZowatchLink() {
+      const p = document.createElement("p");
+      p.innerHTML = `<a href="${zowatchLink}" class="link" target="_blank">${generateCrypticSymbols(zowatchLink)}</a>`;
+      output.appendChild(p);
+      output.scrollTop = output.scrollHeight;
     }
 
-    async function showError() {
-      await delay(500);
-      const error = document.createElement("p");
-      error.textContent = errorMessage;
-      error.classList.add("error");
-      output.appendChild(error);
+    async function displayInstallAppLink() {
+      const p = document.createElement("p");
+      p.innerHTML = `<a href="${installAppLink}" class="link" target="_blank">${generateCrypticSymbols(installAppLink)}</a>`;
+      output.appendChild(p);
+      output.scrollTop = output.scrollHeight;
     }
 
     input.addEventListener("keypress", async (event) => {
       if (event.key === "Enter") {
         const enteredCode = input.value.trim();
-        input.value = ""; // Clear input field
+        input.value = ""; // Clear the input field
 
         const command = document.createElement("p");
-        command.textContent = `> ${enteredCode}`;
+        command.textContent = `> ${generateCrypticSymbols(enteredCode)}`;
         output.appendChild(command);
 
-        if (enteredCode === correctCode) {
-          await simulateHacking();
+        if (enteredCode === zowatchCode) {
+          await displayMessage("ACCESS GRANTED: ZOWATCH SYSTEM", "flicker");
+          await displayZowatchLink();
+        } else if (enteredCode === installAppCode) {
+          await displayMessage("INSTALLATION REQUEST VALIDATED", "flicker");
+          await displayInstallAppLink();
         } else {
-          await showError();
+          await displayMessage("ERROR: Invalid request", "error");
         }
       }
     });
