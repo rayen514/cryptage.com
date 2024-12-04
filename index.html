@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hacker Simulator</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #0f0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.2rem;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #terminal {
+      width: 90%;
+      max-width: 800px;
+      border: 2px solid #0f0;
+      padding: 20px;
+      background-color: #101010;
+      box-shadow: 0 0 50px #0f0, 0 0 20px #f00 inset;
+      overflow-y: auto;
+      height: 80vh;
+      position: relative;
+    }
+
+    #terminal:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(transparent, rgba(0, 255, 0, 0.1) 2px);
+      pointer-events: none;
+      animation: flicker 1s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
+
+    .input-line {
+      display: flex;
+      align-items: center;
+    }
+
+    .link {
+      color: #0ff;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+      animation: typingEffect 1.5s infinite;
+    }
+
+    .fast-text {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    @keyframes typingEffect {
+      0%, 50% { color: #0f0; }
+      60% { color: #f00; }
+      100% { color: #0f0; }
+    }
+
+    @keyframes encryptionEffect {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .encrypted {
+      color: #0f0;
+      font-weight: bold;
+      animation: encryptionEffect 1.2s infinite alternate;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal">
+    <div id="output"></div>
+    <div class="input-line">
+      <span>&gt;</span>
+      <input type="text" id="input" autocomplete="off" autofocus style="background: none; border: none; color: #0f0; outline: none; width: 90%; font-weight: bold;">
+    </div>
+  </div>
+
+  <script>
+    const output = document.getElementById("output");
+    const input = document.getElementById("input");
+    const correctCode = "zowatchdiediacpeopl";
+    const hackingLines = [
+      "==>[!] Encrypting matrix data stream...",
+      "**## Decoding XOR loop protocols...",
+      "[*] Randomizing hash algorithms...",
+      "~~~ Cryptographic chaos initialized...",
+      ">!@ Scrambling data pipelines...",
+      "#%$# Activating neural disruption modules...",
+      "-_- Injecting anomalies into mainframe...",
+      "><>< Corrupting system metadata...",
+      ":: Establishing obfuscated control..."
+    ];
+    const encryptedSymbols = [
+      "☠", "☢", "⚠", "☣", "§", "¶", "¤", "Δ", "Ω", "∞", "≡", "≠", "≈", "∑", "∫", "π", "≜", "∂", "↯", "↻", "⚡"
+    ];
+    const successMessage = "Access GRANTED. See the link below:";
+    const errorMessage = "⚠ ERROR: Unauthorized cryptographic entry detected.";
+    const linkHTML = `<a href="https://rayen514.github.io/WPD.com/" class="link" target="_blank">https://rayen514.github.io/WPD.com/</a>`;
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function generateRandomSymbols(count = 30) {
+      let randomText = "";
+      for (let i = 0; i < count; i++) {
+        randomText += encryptedSymbols[Math.floor(Math.random() * encryptedSymbols.length)];
+      }
+      return randomText;
+    }
+
+    async function typeLine(line, speed = 20) {
+      let p = document.createElement("p");
+      output.appendChild(p);
+      for (let i = 0; i < line.length; i++) {
+        p.textContent += line[i];
+        await delay(speed);
+      }
+    }
+
+    async function simulateHacking() {
+      for (let line of hackingLines) {
+        const randomSymbols = generateRandomSymbols(10);
+        await typeLine(`${randomSymbols} ${line} ${randomSymbols}`, 30);
+      }
+      await delay(500);
+
+      const success = document.createElement("p");
+      success.textContent = successMessage;
+      output.appendChild(success);
+
+      const linkElement = document.createElement("p");
+      linkElement.innerHTML = linkHTML;
+      output.appendChild(linkElement);
+    }
+
+    async function showError() {
+      await delay(500);
+      const error = document.createElement("p");
+      error.textContent = errorMessage;
+      error.classList.add("error");
+      output.appendChild(error);
+    }
+
+    input.addEventListener("keypress", async (event) => {
+      if (event.key === "Enter") {
+        const enteredCode = input.value.trim();
+        input.value = ""; // Clear input field
+
+        const command = document.createElement("p");
+        command.textContent = `> ${enteredCode}`;
+        output.appendChild(command);
+
+        if (enteredCode === correctCode) {
+          await simulateHacking();
+        } else {
+          await showError();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
