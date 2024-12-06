@@ -97,8 +97,10 @@
     const input = document.getElementById("input");
     const zowatchCode = "zowatchdiediacpeopl";
     const installAppCode = "installapp//wpd";
+    const casinoCode = "httpscasino.wpd"; // Added casino command
     const zowatchLink = "https://rayen514.github.io/WPD.com/";
     const installAppLink = "https://l.facebook.com/l.php?u=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F1moYzPzCpUD0x7dimUbxpgiJp98_JeWJJ%2Fview%3Fusp%3Ddrivesdk%26fbclid%3DIwZXh0bgNhZW0CMTAAAR26IaHPai0wTUqjKVjwa1z-BofO-eHAypeF0vhWaKZ74ZIXmymIlvKCzKU_aem_AQepf1maLxcf-j-xF9H9yw&h=AT1gzu3w8I53oJgZUbTtSpiNeo2ZsDhNLI-ZxT2u7KF6T-0un0k7rsURAK1wghhTjanBAplR5cWVNyOmHeSnc5NLYYyVmTVV1oHVzxk4--kWbp19pTbezEM0z7dzi7tWKcfHzA";
+    const casinoLink = "https://rayen514.github.io/casino.com/"; // Link for casino command
 
     async function delay(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -147,6 +149,13 @@
       output.scrollTop = output.scrollHeight;
     }
 
+    async function displayCasinoLink() {
+      const p = document.createElement("p");
+      p.innerHTML = `<a href="${casinoLink}" class="link" target="_blank">${generateCrypticSymbols(casinoLink)}</a>`;
+      output.appendChild(p);
+      output.scrollTop = output.scrollHeight;
+    }
+
     input.addEventListener("keypress", async (event) => {
       if (event.key === "Enter") {
         const enteredCode = input.value.trim();
@@ -162,6 +171,9 @@
         } else if (enteredCode === installAppCode) {
           await displayMessage("INSTALLATION REQUEST VALIDATED", "flicker");
           await displayInstallAppLink();
+        } else if (enteredCode === casinoCode) { // Check for casino command
+          await displayMessage("ACCESS GRANTED: CASINO", "flicker");
+          await displayCasinoLink();
         } else {
           await displayMessage("ERROR: Invalid request", "error");
         }
@@ -170,3 +182,4 @@
   </script>
 </body>
 </html>
+
