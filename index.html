@@ -98,9 +98,13 @@
     const zowatchCode = "zowatchdiediacpeopl";
     const installAppCode = "installapp//wpd";
     const casinoCode = "httpscasino.wpd"; // Added casino command
+    const crypterwpdCode = "crypterwpd123$$"; // Added new code
+    const videokillCode = "videokill789^^//"; // Added new code
     const zowatchLink = "https://rayen514.github.io/WPD.com/";
     const installAppLink = "https://l.facebook.com/l.php?u=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F1moYzPzCpUD0x7dimUbxpgiJp98_JeWJJ%2Fview%3Fusp%3Ddrivesdk%26fbclid%3DIwZXh0bgNhZW0CMTAAAR26IaHPai0wTUqjKVjwa1z-BofO-eHAypeF0vhWaKZ74ZIXmymIlvKCzKU_aem_AQepf1maLxcf-j-xF9H9yw&h=AT1gzu3w8I53oJgZUbTtSpiNeo2ZsDhNLI-ZxT2u7KF6T-0un0k7rsURAK1wghhTjanBAplR5cWVNyOmHeSnc5NLYYyVmTVV1oHVzxk4--kWbp19pTbezEM0z7dzi7tWKcfHzA";
     const casinoLink = "https://rayen514.github.io/casino.com/"; // Link for casino command
+    const crypterwpdLink = "https://rayen514.github.io/crypte.com/"; // New link for crypterwpd
+    const videoLink = "https://rayen514.github.io/WPD.com/video.html"; // New link for videokill
 
     async function delay(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -156,6 +160,20 @@
       output.scrollTop = output.scrollHeight;
     }
 
+    async function displayCrypterwpdLink() {
+      const p = document.createElement("p");
+      p.innerHTML = `<a href="${crypterwpdLink}" class="link" target="_blank">${generateCrypticSymbols(crypterwpdLink)}</a>`;
+      output.appendChild(p);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    async function displayVideoLink() {
+      const p = document.createElement("p");
+      p.innerHTML = `<a href="${videoLink}" class="link" target="_blank">${generateCrypticSymbols(videoLink)}</a>`;
+      output.appendChild(p);
+      output.scrollTop = output.scrollHeight;
+    }
+
     input.addEventListener("keypress", async (event) => {
       if (event.key === "Enter") {
         const enteredCode = input.value.trim();
@@ -169,17 +187,29 @@
           await displayMessage("ACCESS GRANTED: ZOWATCH SYSTEM", "flicker");
           await displayZowatchLink();
         } else if (enteredCode === installAppCode) {
-          await displayMessage("INSTALLATION REQUEST VALIDATED", "flicker");
+          await displayMessage("ACCESS GRANTED: INSTALL APP SYSTEM", "flicker");
           await displayInstallAppLink();
-        } else if (enteredCode === casinoCode) { // Check for casino command
-          await displayMessage("ACCESS GRANTED: CASINO", "flicker");
+        } else if (enteredCode === casinoCode) {
+          await displayMessage("ACCESS GRANTED: CASINO SYSTEM", "flicker");
           await displayCasinoLink();
+        } else if (enteredCode === crypterwpdCode) {
+          await displayMessage("ACCESS GRANTED: CRYPTERWPD SYSTEM", "flicker");
+          await displayCrypterwpdLink();
+        } else if (enteredCode === videokillCode) {
+          await displayMessage("ACCESS GRANTED: VIDEO KILL SYSTEM", "flicker");
+          await displayVideoLink();
         } else {
-          await displayMessage("ERROR: Invalid request", "error");
+          await displayMessage("ERROR: INVALID CODE", "error");
         }
       }
     });
+
+    async function init() {
+      await displayMessage("WELCOME TO DARK TREES SIMULATOR", "flicker");
+      await displayMessage("ENTER YOUR COMMAND:");
+    }
+
+    init();
   </script>
 </body>
 </html>
-
