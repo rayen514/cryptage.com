@@ -96,26 +96,27 @@
     const input = document.getElementById("input");
     const zowatchCode = "zowatchdiediacpeopl";
     const installAppCode = "installapp//wpd";
-    const casinoCode = "httpscasino.wpd"; // Added casino command
-    const crypterwpdCode = "crypterwpd123$$"; // Added new code
-    const videokillCode = "videokill789^^//"; // Added new code
-    const profilewpdCode = "profilewpd//"; // Added new code
-    const installwpdCode = "installwpd//"; // Added new code
-    const journalwpdCode = "journal//wpd"; // Added new code
+    const casinoCode = "httpscasino.wpd";
+    const crypterwpdCode = "crypterwpd123$$";
+    const videokillCode = "videokill789^^//";
+    const profilewpdCode = "profilewpd//";
+    const installwpdCode = "installwpd//";
+    const journalwpdCode = "journal//wpd";
+    const matholympiadCode = "matholympiad//wpd";  // New command for Math Olympiad link
     const zowatchLink = "https://rayen514.github.io/WPD.com/";
     const installAppLink = "https://l.facebook.com/l.php?u=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F1moYzPzCpUD0x7dimUbxpgiJp98_JeWJJ%2Fview%3Fusp%3Ddrivesdk%26fbclid%3DIwZXh0bgNhZW0CMTAAAR26IaHPai0wTUqjKVjwa1z-BofO-eHAypeF0vhWaKZ74ZIXmymIlvKCzKU_aem_AQepf1maLxcf-j-xF9H9yw&h=AT1gzu3w8I53oJgZUbTtSpiNeo2ZsDhNLI-ZxT2u7KF6T-0un0k7rsURAK1wghhTjanBAplR5cWVNyOmHeSnc5NLYYyVmTVV1oHVzxk4--kWbp19pTbezEM0z7dzi7tWKcfHzA";
-    const casinoLink = "https://rayen514.github.io/casino.com/"; // Link for casino command
-    const crypterwpdLink = "https://rayen514.github.io/crypte.com/"; // New link for crypterwpd
-    const videoLink = "https://rayen514.github.io/WPD.com/video.html"; // New link for videokill
-    const profilewpdLink = "https://rayen514.github.io/news.com/"; // Link for profilewpd command
-    const installwpdLink = "https://rayen514.github.io/hack.com/"; // Link for installwpd command
-    const journalwpdLink = "https://rayen514.github.io/journal.com/"; // Link for journalwpd command
+    const casinoLink = "https://rayen514.github.io/casino.com/";
+    const crypterwpdLink = "https://rayen514.github.io/crypte.com/";
+    const videoLink = "https://rayen514.github.io/WPD.com/video.html";
+    const profilewpdLink = "https://rayen514.github.io/news.com/";
+    const installwpdLink = "https://rayen514.github.io/hack.com/";
+    const journalwpdLink = "https://rayen514.github.io/journal.com/";
+    const matholympiadLink = "https://l.facebook.com/l.php?u=https%3A%2F%2Frebrand.ly%2Ff...";  // Your Math Olympiad link
 
     async function delay(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // Fonction pour générer des symboles mathématiques, grecs et autres caractères
     function generateCrypticSymbols(text) {
       const symbols = [
         'Σ', '∇', '∑', '≡', '≈', 'α', 'β', 'γ', 'λ', 'δ', 'φ', 'θ', 'Ω', 'ξ', 'ψ', 'ϕ', 'η', 'π', 'ρ', 'σ',
@@ -137,11 +138,17 @@
       } else if (type === "flicker") {
         p.classList.add("flicker");
       }
-      // Applique un cryptage avec des symboles aléatoires au message
       p.textContent = generateCrypticSymbols(message);
       output.appendChild(p);
       output.scrollTop = output.scrollHeight;
       await delay(1000);
+    }
+
+    async function displayMathOlympiadLink() {
+      const p = document.createElement("p");
+      p.innerHTML = `<a href="${matholympiadLink}" class="link" target="_blank">${generateCrypticSymbols(matholympiadLink)}</a>`;
+      output.appendChild(p);
+      output.scrollTop = output.scrollHeight;
     }
 
     async function displayZowatchLink() {
@@ -233,12 +240,14 @@
         } else if (enteredCode === journalwpdCode) {
           await displayMessage("ACCESS GRANTED: JOURNAL WPD SYSTEM", "flicker");
           await displayJournalwpdLink();
+        } else if (enteredCode === matholympiadCode) {  // Check for the Math Olympiad command
+          await displayMessage("ACCESS GRANTED: MATH OLYMPIAD SYSTEM", "flicker");
+          await displayMathOlympiadLink();
         } else {
-          await displayMessage("INVALID CODE. TRY AGAIN.", "error");
+          await displayMessage("ERROR: INVALID COMMAND", "error");
         }
       }
     });
 </script>
-
 </body>
 </html>
