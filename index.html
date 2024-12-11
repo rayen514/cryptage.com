@@ -90,9 +90,8 @@
       <span>&gt;</span>
       <input type="text" id="input" autocomplete="off" autofocus style="background: none; border: none; color: #0a0; outline: none; width: 90%; font-weight: bold;">
     </div>
-  </div>
-
-  <script>
+</div>
+<script>
     const output = document.getElementById("output");
     const input = document.getElementById("input");
     const zowatchCode = "zowatchdiediacpeopl";
@@ -100,11 +99,17 @@
     const casinoCode = "httpscasino.wpd"; // Added casino command
     const crypterwpdCode = "crypterwpd123$$"; // Added new code
     const videokillCode = "videokill789^^//"; // Added new code
+    const profilewpdCode = "profilewpd//"; // Added new code
+    const installwpdCode = "installwpd//"; // Added new code
+    const journalwpdCode = "journal//wpd"; // Added new code
     const zowatchLink = "https://rayen514.github.io/WPD.com/";
     const installAppLink = "https://l.facebook.com/l.php?u=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F1moYzPzCpUD0x7dimUbxpgiJp98_JeWJJ%2Fview%3Fusp%3Ddrivesdk%26fbclid%3DIwZXh0bgNhZW0CMTAAAR26IaHPai0wTUqjKVjwa1z-BofO-eHAypeF0vhWaKZ74ZIXmymIlvKCzKU_aem_AQepf1maLxcf-j-xF9H9yw&h=AT1gzu3w8I53oJgZUbTtSpiNeo2ZsDhNLI-ZxT2u7KF6T-0un0k7rsURAK1wghhTjanBAplR5cWVNyOmHeSnc5NLYYyVmTVV1oHVzxk4--kWbp19pTbezEM0z7dzi7tWKcfHzA";
     const casinoLink = "https://rayen514.github.io/casino.com/"; // Link for casino command
     const crypterwpdLink = "https://rayen514.github.io/crypte.com/"; // New link for crypterwpd
     const videoLink = "https://rayen514.github.io/WPD.com/video.html"; // New link for videokill
+    const profilewpdLink = "https://rayen514.github.io/news.com/"; // Link for profilewpd command
+    const installwpdLink = "https://rayen514.github.io/hack.com/"; // Link for installwpd command
+    const journalwpdLink = "https://rayen514.github.io/journal.com/"; // Link for journalwpd command
 
     async function delay(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -174,6 +179,27 @@
       output.scrollTop = output.scrollHeight;
     }
 
+    async function displayProfilewpdLink() {
+      const p = document.createElement("p");
+      p.innerHTML = `<a href="${profilewpdLink}" class="link" target="_blank">${generateCrypticSymbols(profilewpdLink)}</a>`;
+      output.appendChild(p);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    async function displayInstallwpdLink() {
+      const p = document.createElement("p");
+      p.innerHTML = `<a href="${installwpdLink}" class="link" target="_blank">${generateCrypticSymbols(installwpdLink)}</a>`;
+      output.appendChild(p);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    async function displayJournalwpdLink() {
+      const p = document.createElement("p");
+      p.innerHTML = `<a href="${journalwpdLink}" class="link" target="_blank">${generateCrypticSymbols(journalwpdLink)}</a>`;
+      output.appendChild(p);
+      output.scrollTop = output.scrollHeight;
+    }
+
     input.addEventListener("keypress", async (event) => {
       if (event.key === "Enter") {
         const enteredCode = input.value.trim();
@@ -198,18 +224,21 @@
         } else if (enteredCode === videokillCode) {
           await displayMessage("ACCESS GRANTED: VIDEO KILL SYSTEM", "flicker");
           await displayVideoLink();
+        } else if (enteredCode === profilewpdCode) {
+          await displayMessage("ACCESS GRANTED: PROFILE WPD SYSTEM", "flicker");
+          await displayProfilewpdLink();
+        } else if (enteredCode === installwpdCode) {
+          await displayMessage("ACCESS GRANTED: INSTALL WPD SYSTEM", "flicker");
+          await displayInstallwpdLink();
+        } else if (enteredCode === journalwpdCode) {
+          await displayMessage("ACCESS GRANTED: JOURNAL WPD SYSTEM", "flicker");
+          await displayJournalwpdLink();
         } else {
-          await displayMessage("ERROR: INVALID CODE", "error");
+          await displayMessage("INVALID CODE. TRY AGAIN.", "error");
         }
       }
     });
+</script>
 
-    async function init() {
-      await displayMessage("WELCOME TO DARK TREES SIMULATOR", "flicker");
-      await displayMessage("ENTER YOUR COMMAND:");
-    }
-
-    init();
-  </script>
 </body>
 </html>
